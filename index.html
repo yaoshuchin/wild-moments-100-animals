@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta name="theme-color" content="#08151a" />
+  <meta name="description" content="一個可旋轉地球、探索全球 100 種動物觀察攝影機的繁體中文互動網站。" />
+  <title>此刻野境・全球動物觀察站｜100種動物世界生態 Live</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+<div class="app">
+  <header class="topbar">
+    <div class="brand"><span class="brand-mark" aria-hidden="true">🌿</span><div><div class="brand-title">此刻野境</div><div class="brand-en">WILD MOMENTS · EARTH LIVE</div></div></div>
+    <div class="top-center"><span class="blink"></span> 正在探索這顆星球上的生命故事 <span id="headerTime">—</span></div>
+    <div class="top-actions"><button class="small-btn" id="surpriseBtn">✦ 隨機探索</button><button class="status-chip" id="netIndicator" title="本機網路提示；不代表來源一定可用">◌ 網路狀態待確認</button><button class="small-btn" id="managerBtn">⚙ 來源管理</button><button class="small-btn" id="helpBtn">ⓘ 使用說明</button></div>
+  </header>
+  <main class="layout">
+    <aside class="sidebar">
+      <div class="overline">EXPLORE THE WILD</div>
+      <h1 class="section-head">世界各地，<br>生命正在發生。</h1>
+      <p class="section-desc">旋轉地球，挑一處動物棲地。此刻，就從你的螢幕看見世界另一端。</p><div class="summary-grid"><div class="summary-tile"><b id="sourceTotal">100</b><span>啟用來源</span></div><div class="summary-tile"><b id="sourcePlaying">0</b><span>已播放</span></div><div class="summary-tile alert"><b id="sourceWarnings">0</b><span>異常回報</span></div></div><div class="sidebar-monitor"><small>● 攝影機狀態（依實際訊號）</small><button id="openStatusBtn">查看提醒</button></div>
+      <div class="filter-label">☀ 依當地日夜探索</div>
+      <div class="segments" id="timeFilters"><button class="segment active" data-when="all">全部</button><button class="segment" data-when="day">☀ 白天</button><button class="segment" data-when="night">☾ 夜晚</button></div>
+      <div class="filter-label">◈ 觀察對象</div><div class="tags" id="categories"><button class="tag active" data-kind="全部">全部動物</button><button class="tag" data-kind="哺乳類">哺乳類</button><button class="tag" data-kind="鳥類">鳥類</button><button class="tag" data-kind="海洋生物">海洋生物</button><button class="tag" data-kind="野生動物">野生動物</button></div>
+      <div class="filter-label">⌕ 搜尋地點或動物</div><div class="search-wrap"><input type="search" id="search" class="search" placeholder="例如：熊貓、非洲、海獺" aria-label="搜尋動物或地點" /></div>
+      <div class="list-heading"><span>觀察據點</span><span class="count" id="resultCount">—</span></div><div class="spot-list" id="spotList"></div>
+    </aside>
+    <section class="stage" id="stage" aria-label="可拖曳旋轉的互動地球">
+      <canvas id="globe" aria-label="全球動物觀察點 3D 球面地圖；可拖曳旋轉，滑鼠滾輪縮放"></canvas>
+      <div class="stage-label"><div class="stage-eyebrow">A WINDOW TO OUR WORLD · LIVE SOURCES V4</div><div class="stage-title">地球，此時此刻。</div><div class="stage-caption">追蹤全球動物觀察據點。每個亮點，都是一段真實的生態故事。</div></div>
+      <div class="stage-tools"><button class="icon-btn" id="zoomIn" title="放大地球" aria-label="放大地球">＋</button><button class="icon-btn" id="zoomOut" title="縮小地球" aria-label="縮小地球">−</button><button class="icon-btn" id="resetView" title="重設地球視角" aria-label="重設視角">⌖</button><button class="icon-btn" id="rotateToggle" title="開關自動旋轉" aria-label="切換自動旋轉">⟳</button></div>
+      <div class="stage-float" id="stageStatus">◉ 可拖曳、縮放與點選動物標記</div>
+      <div class="stage-bottom"><div class="hint">✧ 拖曳地球旋轉　·　滾輪縮放　·　點選亮點探索</div><div class="scale">OUR ONE AND ONLY HOME<br><strong id="earthYear">EARTH · 2026</strong></div></div>
+    </section>
+    <aside class="details" aria-live="polite">
+      <div class="info-top"><span class="eyebrow">FIELD NOTES / 觀察日誌</span><button class="fav" id="favBtn" title="切換我的收藏" aria-label="收藏這個觀察站">♡</button></div>
+      <div class="detail-title" id="detailName">蒙特雷海洋生態</div><div class="detail-region" id="detailRegion">📍 美國・加州</div>
+      <div class="statbar"><div class="stat"><small>當地時間</small><b id="localClock">—</b></div><div class="stat"><small>當地日夜</small><b id="dayStatus">—</b></div><div class="stat"><small>觀察類型</small><b id="typeStatus">—</b></div></div>
+      <div class="origin-note" id="originNotice" hidden></div><div class="detail-status unknown" id="detailMonitor"><span class="activity-dot unknown"></span><span id="monitorText">尚未檢測</span><small id="monitorTime">—</small></div><div class="health-explain" id="monitorExplain">狀態依瀏覽器與播放器可取得的資訊顯示，未播放不等於離線。</div><div class="media" id="media"><span class="media-badge" id="mediaBadge">🎬 官方攝影機</span><span class="media-glow" id="mediaEmoji">🦦</span><button class="media-play" id="mediaPlay">▶ 在新分頁觀看官方影片</button></div><p class="play-notice" id="playNotice">點選按鈕將直接開啟新分頁，前往 YouTube 或官方平台觀看最高畫質影像。</p>
+      <div class="cam-list" id="camList"></div><a id="videoDirect" href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer" style="display:none;margin:-6px 0 15px;font-size:11px;color:#a0e8cd;text-decoration:underline;text-underline-offset:3px">↗ 在新分頁開啟影音連結</a>
+      <div id="sourceVerification" class="verify-box" aria-live="polite"><span class="verify-chip">來源核對</span><b id="verifyLabel">正在載入…</b><p id="verifyDetails">以官方頁面及官方影片查詢結果為準，並非即時訊號。</p><a id="verifyUrl" target="_blank" rel="noopener noreferrer">↗ 查看核對依據</a></div>
+      <div id="montereyCams" class="monterey-cams" hidden><span>其餘官方攝影機（目前未附上可確認的 YouTube ID）：</span><a href="https://www.montereybayaquarium.org/cams-videos/live-cams/moon-jelly-cam" target="_blank" rel="noopener noreferrer">月亮水母</a><a href="https://www.montereybayaquarium.org/cams-videos/live-cams/shark-cam" target="_blank" rel="noopener noreferrer">鯊魚</a><a href="https://www.montereybayaquarium.org/cams-videos/live-cams/open-sea-cam" target="_blank" rel="noopener noreferrer">外洋</a></div><p class="body-copy" id="detailBody">—</p>
+      <div class="facts"><div class="facts-head">✦ 你知道嗎？</div><p id="detailFact">—</p></div>
+      <div class="health-row"><button id="recheckBtn">↻ 重新檢查／播放</button><button id="reportBtn">⚠ 回報畫面異常</button></div><div class="alerts-head"><span>⚑ 狀態與異常紀錄</span><button id="clearAlertsBtn">清除紀錄</button></div><div class="notice-log" id="alertLog" aria-live="polite"><p>目前沒有異常紀錄。</p></div><div class="notification-prefs"><label><input type="checkbox" id="inlineAlerts" checked> 顯示頁內提醒</label><button class="manager-btn" id="notifyBtn">開啟桌面通知</button></div><div class="detail-action"><a class="action primary" id="sourceLink" target="_blank" rel="noopener noreferrer">↗ 來源網站</a><button class="action" id="focusBtn">◎ 地球上定位</button></div>
+      <p class="credits">本網站為獨立功能示範。播放器顯示「播放中」不等於正在直播；未檢測或播放逾時也不等於攝影機離線。第三方來源可能限制嵌入。系統通知僅在本頁開啟、瀏覽器允許時提供。</p>
+    </aside>
+  </main>
+  <footer class="footer"><span>© 此刻野境 · 互動網站 Demo　|　地圖資料：Natural Earth / Basemap</span><span>來源：Monterey Bay Aquarium、Explore.org　·　部分直播需至官方頁面觀看</span></footer>
+</div>
+<div class="toast" id="toast" role="status"></div>
+<div class="manager-overlay" id="manager" role="dialog" aria-modal="true" aria-labelledby="managerTitle"><div class="manager-dialog"><div class="manager-header"><div><h2 id="managerTitle">⚙ 攝影機來源管理</h2><p>可編輯、停用、新增與備份來源；設定僅儲存在此瀏覽器，不會回寫來源網站。</p></div><button class="manager-close" id="managerClose" aria-label="關閉來源管理">✕</button></div><div class="manager-body"><div class="manager-left"><div class="manager-actions"><button class="manager-btn strong" id="sourceAdd">＋ 新增</button><button class="manager-btn" id="sourceExport">↓ 匯出 JSON</button><button class="manager-btn" id="sourceImport">↑ 匯入 JSON</button><input type="file" id="sourceImportFile" accept=".json,application/json" style="display:none" aria-label="匯入 JSON 檔案"></div><div class="status-legend">來源條目旁的訊號代表本次瀏覽取得的播放器訊息／人工回報。未開啟播放的來源無法判斷是否在線。</div><div id="managerItems"></div><button class="manager-btn danger" id="sourceRestore" style="margin-top:10px">⟲ 恢復預設 100 處來源</button></div><div class="manager-right"><h3 id="formTitle" style="margin:0 0 14px;font-size:18px">編輯來源</h3><div class="manager-tips">來源須提供 http(s) 官方網址。若要在網站內顯示 YouTube 播放器，請於最下方每行輸入「鏡頭名稱 | YouTube 影片網址或 11 碼 ID」。未填寫鏡頭者僅顯示官方外連。</div><form id="sourceForm"><div class="field-grid"><div class="manager-field"><label for="editName">觀察站名稱 *</label><input id="editName" maxlength="70" required></div><div class="manager-field"><label for="editIcon">動物圖示／Emoji</label><input id="editIcon" maxlength="12" placeholder="🦦"></div><div class="manager-field"><label for="editCountry">國家與地點 *</label><input id="editCountry" maxlength="90" required></div><div class="manager-field"><label for="editSource">來源機構 *</label><input id="editSource" maxlength="90" required></div><div class="manager-field"><label for="editLat">緯度（-90 ~ 90）*</label><input id="editLat" type="number" step="any" min="-90" max="90" required></div><div class="manager-field"><label for="editLon">經度（-180 ~ 180）*</label><input id="editLon" type="number" step="any" min="-180" max="180" required></div><div class="manager-field"><label for="editTZ">時區（IANA）*</label><input id="editTZ" placeholder="Asia/Taipei" required></div><div class="manager-field"><label for="editKind">分類</label><select id="editKind"><option>哺乳類</option><option>鳥類</option><option>海洋生物</option><option>野生動物</option></select></div></div><div class="manager-field"><label for="editURL">官方來源網址（https://…）*</label><input id="editURL" type="url" required></div><div class="manager-field"><label for="editTags">搜尋標籤（以逗號分隔）</label><input id="editTags"></div><div class="manager-field"><label for="editSummary">觀察站介紹</label><textarea id="editSummary" rows="2"></textarea></div><div class="manager-field"><label for="editFact">你知道嗎？</label><textarea id="editFact" rows="2"></textarea></div><div class="manager-field"><label for="editCams">YouTube 鏡頭（每行一個，可留空）</label><textarea id="editCams" rows="3" placeholder="🦦 海獺 | https://www.youtube.com/watch?v=abbR-Ttd-cA"></textarea></div><div class="manager-message" id="managerMessage" role="status"></div><div class="manager-actions"><button type="submit" class="manager-btn strong">✓ 儲存來源</button><button type="button" class="manager-btn danger" id="sourceDelete">刪除目前來源</button><button type="button" class="manager-btn" id="sourceView">在地球上查看</button></div></form></div></div><div class="manager-footer"><span>本地儲存：localStorage｜匯出可作備份｜無伺服器，不會自動跨裝置同步</span><span>直播是否在線請以官方平台公告為準</span></div></div></div>
+<div class="help" id="help" role="dialog" aria-modal="true" aria-labelledby="helpTitle"><div class="help-inner"><h2 id="helpTitle">🌍 怎麼玩「此刻野境」？</h2><p>這是一個真正可以操作的地球與動物攝影機示範站。推薦從下列步驟開始：</p><ol><li><b>拖曳地球</b>：按住滑鼠左右／上下拖動，或用手指滑動。</li><li><b>放大與縮小</b>：滑鼠滾輪或右側 ＋ / − 按鈕。</li><li><b>尋找動物</b>：直接點選地球亮點，或在左側清單選擇。</li><li><b>日夜篩選</b>：切換「白天／夜晚」，依攝影機所在地的太陽位置篩選。</li><li><b>觀看動物影像</b>：可嵌入的 Monterey Bay Aquarium 影片會在右側播放；其他鏡頭點選後前往官方來源。</li></ol><p>新功能：右上角「來源管理」可新增、編輯、停用與匯入／匯出 JSON；右側顯示播放器狀態與異常紀錄，並可手動回報畫面異常。提醒只在網頁開啟期間運作；「播放中」不保證是即時直播。「未檢測」不代表離線。按鍵盤 Esc 可以關閉本說明。</p><button class="help-close" id="helpClose">開始探索 ✦</button></div></div>
+
+  <!-- 依序載入地理資料、100種動物資料與應用程式核心 -->
+  <script src="js/geo-data.js"></script>
+  <script src="js/animals-data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

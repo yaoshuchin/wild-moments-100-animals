@@ -1,0 +1,4 @@
+check_results.json
+*.log
+.DS_Store
+Thumbs.db
